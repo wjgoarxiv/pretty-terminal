@@ -2,3 +2,4 @@
 *.bak
 node_modules/
 .omc/
+generate-cover.py
