@@ -6,6 +6,8 @@
 
 One command to make your terminal beautiful. Works on macOS, Windows, and Linux.
 
+> **English** | [한국어](README.ko.md)
+
 ## What You Get
 
 - **JetBrainsMono Nerd Font** — Beautiful monospace font with icon support (or D2CodingLigature Nerd Font Mono for Korean)
