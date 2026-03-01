@@ -1,0 +1,150 @@
+{
+  "$schema": "https://ohmyposh.dev/schema.json",
+  "version": 2,
+  "final_space": true,
+  "console_title_template": "{{ .Shell }} - {{ .Folder }}",
+  "palette": {
+    "background":  "transparent",
+    "foreground":  "#f8f8f2",
+    "blue":        "#6272a4",
+    "bright-blue": "#8be9fd",
+    "cyan":        "#8be9fd",
+    "green":       "#50fa7b",
+    "orange":      "#ffb86c",
+    "pink":        "#ff79c6",
+    "purple":      "#bd93f9",
+    "red":         "#ff5555",
+    "yellow":      "#f1fa8c",
+    "grey":        "#6272a4",
+    "white":       "#f8f8f2"
+  },
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "type": "os",
+          "style": "plain",
+          "foreground": "p:white",
+          "background": "transparent",
+          "template": " \uf17a ",
+          "properties": {
+            "windows": "\uf17a",
+            "macos":   "\uf179",
+            "linux":   "\uf17c"
+          }
+        },
+        {
+          "type": "path",
+          "style": "plain",
+          "foreground": "p:bright-blue",
+          "background": "transparent",
+          "template": "{{ if .Writable }}{{ else }}\uf023 {{ end }}{{ .Path }}",
+          "properties": {
+            "style":            "agnoster_short",
+            "max_depth":        4,
+            "folder_separator": "/",
+            "home_icon":        "~",
+            "folder_icon":      "\uf07b",
+            "enable_hyperlink": false
+          }
+        },
+        {
+          "type": "git",
+          "style": "plain",
+          "foreground": "p:green",
+          "foreground_templates": [
+            "{{ if or .Working.Changed .Staging.Changed }}p:yellow{{ end }}",
+            "{{ if and (gt .Ahead 0) (gt .Behind 0) }}p:red{{ end }}",
+            "{{ if gt .Ahead 0 }}p:cyan{{ end }}"
+          ],
+          "background": "transparent",
+          "template": " \uf126 {{ .HEAD }}{{ if .Working.Changed }} !{{ end }}{{ if .Staging.Changed }} +{{ end }}{{ if gt .Stashcount 0 }} *{{ .Stashcount }}{{ end }}{{ if gt .Ahead 0 }} \u2191{{ .Ahead }}{{ end }}{{ if gt .Behind 0 }} \u2193{{ .Behind }}{{ end }}",
+          "properties": {
+            "fetch_status":      true,
+            "fetch_stash_count": true,
+            "fetch_upstream_icon": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "segments": [
+        {
+          "type": "exit",
+          "style": "plain",
+          "foreground": "p:red",
+          "background": "transparent",
+          "template": " \uf00d {{ .Code }} ",
+          "properties": {
+            "always_enabled": false
+          }
+        },
+        {
+          "type": "executiontime",
+          "style": "plain",
+          "foreground": "p:grey",
+          "background": "transparent",
+          "template": " \uf252 {{ .FormattedMs }} ",
+          "properties": {
+            "threshold":        3000,
+            "style":            "austin",
+            "always_enabled":   false
+          }
+        },
+        {
+          "type": "node",
+          "style": "plain",
+          "foreground": "p:green",
+          "background": "transparent",
+          "template": " \uf898 {{ .Full }} ",
+          "properties": {
+            "display_mode": "files",
+            "fetch_package_manager": false
+          }
+        },
+        {
+          "type": "python",
+          "style": "plain",
+          "foreground": "p:cyan",
+          "background": "transparent",
+          "template": " \ue235 {{ if .Venv }}({{ .Venv }}) {{ end }}{{ .Full }} ",
+          "properties": {
+            "display_mode":      "files",
+            "fetch_virtual_env": true
+          }
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "newline": true,
+      "segments": [
+        {
+          "type": "text",
+          "style": "plain",
+          "foreground_templates": [
+            "{{ if gt .Code 0 }}p:red{{ else }}p:green{{ end }}"
+          ],
+          "foreground": "p:green",
+          "background": "transparent",
+          "template": "❯ "
+        }
+      ]
+    }
+  ],
+  "transient_prompt": {
+    "foreground": "p:green",
+    "background": "transparent",
+    "template":   "❯ "
+  },
+  "secondary_prompt": {
+    "foreground": "p:yellow",
+    "background": "transparent",
+    "template":   "❯❯ "
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "$schema": "https://aka.ms/terminal-profiles-schema",
+  "_comment": "pretty-terminal: Windows Terminal settings fragment. Merge this into your settings.json.",
+  "_merge_instructions": [
+    "1. Open Windows Terminal → Settings → Open JSON file",
+    "2. Copy 'schemes' array entry into your existing 'schemes' array",
+    "3. Copy 'profiles.defaults' font settings into your existing 'profiles.defaults'",
+    "4. Or set the font per-profile under 'profiles.list'"
+  ],
+
+  "schemes": [
+    {
+      "name": "Dracula",
+      "background":           "#282A36",
+      "foreground":           "#F8F8F2",
+      "cursorColor":          "#F8F8F2",
+      "selectionBackground":  "#44475A",
+      "black":                "#21222C",
+      "blue":                 "#BD93F9",
+      "cyan":                 "#8BE9FD",
+      "green":                "#50FA7B",
+      "purple":               "#FF79C6",
+      "red":                  "#FF5555",
+      "white":                "#F8F8F2",
+      "yellow":               "#F1FA8C",
+      "brightBlack":          "#6272A4",
+      "brightBlue":           "#D6ACFF",
+      "brightCyan":           "#A4FFFF",
+      "brightGreen":          "#69FF94",
+      "brightPurple":         "#FF92DF",
+      "brightRed":            "#FF6E6E",
+      "brightWhite":          "#FFFFFF",
+      "brightYellow":         "#FFFFA5"
+    }
+  ],
+
+  "profiles": {
+    "defaults": {
+      "colorScheme": "Dracula",
+      "font": {
+        "face": "JetBrainsMono Nerd Font",
+        "size": 13,
+        "weight": "normal"
+      },
+      "opacity": 100,
+      "useAcrylic": false,
+      "padding": "8, 4",
+      "scrollbarState": "hidden",
+      "cursorShape": "filledBox",
+      "antialiasingMode": "cleartype",
+      "bellStyle": "none"
+    }
+  }
+}
