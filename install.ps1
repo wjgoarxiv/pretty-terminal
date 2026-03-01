@@ -5,11 +5,19 @@ param(
     [switch]$FontOnly,
     [switch]$NoTerminal,
     [switch]$NoTheme,
-    [switch]$Help
+    [switch]$Help,
+    [string]$Font = "jetbrains"
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
+
+# Validate Font parameter
+$Font = $Font.ToLower()
+if ($Font -notin @("jetbrains", "d2coding")) {
+    Write-Host "  ERROR: Invalid -Font value '$Font'. Valid options: jetbrains, d2coding" -ForegroundColor Red
+    exit 1
+}
 
 # Source all lib-win modules
 $libDir = Join-Path $PSScriptRoot "lib-win"
@@ -28,17 +36,19 @@ function Show-Help {
     Write-Host "Usage: .\install.ps1 [options]" -ForegroundColor Cyan
     Write-Host ""
     Write-Host "Options:"
-    Write-Host "  -FontOnly     Install Nerd Font only"
-    Write-Host "  -NoTerminal   Skip Windows Terminal config"
-    Write-Host "  -NoTheme      Skip Oh My Posh theme installation"
-    Write-Host "  -Uninstall    Restore backups and undo changes"
-    Write-Host "  -Help         Show this help message"
+    Write-Host "  -FontOnly          Install Nerd Font only"
+    Write-Host "  -NoTerminal        Skip Windows Terminal config"
+    Write-Host "  -NoTheme           Skip Oh My Posh theme installation"
+    Write-Host "  -Uninstall         Restore backups and undo changes"
+    Write-Host "  -Help              Show this help message"
+    Write-Host "  -Font <name>       Font to install: jetbrains (default), d2coding"
     Write-Host ""
     Write-Host "Examples:"
-    Write-Host "  .\install.ps1                  # Full install"
-    Write-Host "  .\install.ps1 -FontOnly        # Install font only"
-    Write-Host "  .\install.ps1 -NoTerminal      # Skip terminal config"
-    Write-Host "  .\install.ps1 -Uninstall       # Restore backups"
+    Write-Host "  .\install.ps1                          # Full install (JetBrainsMono)"
+    Write-Host "  .\install.ps1 -Font d2coding           # Full install (D2CodingLigature)"
+    Write-Host "  .\install.ps1 -FontOnly                # Install font only"
+    Write-Host "  .\install.ps1 -NoTerminal              # Skip terminal config"
+    Write-Host "  .\install.ps1 -Uninstall               # Restore backups"
     Write-Host ""
 }
 
@@ -67,13 +77,14 @@ function Invoke-Uninstall {
 }
 
 function Show-Summary {
+    $fontDisplayName = if ($Font -eq "d2coding") { "D2CodingLigature Nerd Font Mono" } else { "JetBrainsMono Nerd Font" }
     Write-Host ""
     Write-Host "  ─────────────────────────────────────" -ForegroundColor DarkGray
     Write-Success "  Installation complete!"
     Write-Host ""
     Write-Host "  Next steps:" -ForegroundColor Cyan
     Write-Host "  1. Restart Windows Terminal to apply changes"
-    Write-Host "  2. Set font to 'JetBrainsMono Nerd Font' if not auto-applied"
+    Write-Host "  2. Set font to '$fontDisplayName' if not auto-applied"
     Write-Host "  3. Open a new PowerShell session to activate the prompt theme"
     Write-Host ""
 }
@@ -95,7 +106,7 @@ if ($Uninstall) {
 try {
     # Step 1: Nerd Font
     Write-Host "[1/4] Installing Nerd Font..." -ForegroundColor Cyan
-    Install-NerdFont
+    Install-NerdFont -Font $Font
 
     if ($FontOnly) {
         Write-Host ""
@@ -122,7 +133,7 @@ try {
     if (-not $NoTerminal) {
         Write-Host ""
         Write-Host "[4/4] Applying Windows Terminal config..." -ForegroundColor Cyan
-        Apply-TerminalConfig
+        Apply-TerminalConfig -Font $Font
     }
     else {
         Write-Warn "[4/4] Skipping Windows Terminal config (-NoTerminal)."

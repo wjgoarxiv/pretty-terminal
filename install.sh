@@ -19,6 +19,7 @@ DO_UNINSTALL=false
 FONT_ONLY=false
 NO_TERMINAL=false
 NO_THEME=false
+FONT_CHOICE=jetbrains
 
 # --- Parse arguments ---
 usage() {
@@ -30,6 +31,7 @@ Options:
   --font-only      Only install the Nerd Font, skip everything else
   --no-terminal    Skip terminal emulator config (Ghostty/iTerm2)
   --no-theme       Skip Powerlevel10k theme and .p10k.zsh
+  --font CHOICE    Font to install: jetbrains (default) or d2coding
   --help           Show this help message
 
 EOF
@@ -42,6 +44,7 @@ while [[ $# -gt 0 ]]; do
     --font-only)   FONT_ONLY=true; shift ;;
     --no-terminal) NO_TERMINAL=true; shift ;;
     --no-theme)    NO_THEME=true; shift ;;
+    --font)        FONT_CHOICE="${2:-jetbrains}"; shift 2 ;;
     --help|-h)     usage ;;
     *)
       error "Unknown option: $1"
@@ -73,7 +76,7 @@ fi
 
 # --- Step 2: Install font ---
 info "Step 2/6: Font installation..."
-install_font
+install_font "$FONT_CHOICE"
 
 # Stop here if --font-only
 if [[ "$FONT_ONLY" == "true" ]]; then
@@ -91,12 +94,12 @@ install_zsh_setup
 
 # --- Step 5: Apply configs ---
 info "Step 5/6: Applying configurations..."
-apply_configs "$SCRIPT_DIR" "$NO_THEME"
+apply_configs "$SCRIPT_DIR" "$NO_THEME" "$FONT_CHOICE"
 
 # --- Step 6: Terminal config ---
 if [[ "$NO_TERMINAL" != "true" ]]; then
   info "Step 6/6: Terminal configuration..."
-  apply_terminal_config "$SCRIPT_DIR"
+  apply_terminal_config "$SCRIPT_DIR" "$FONT_CHOICE"
 else
   info "Step 6/6: Skipping terminal configuration (--no-terminal)"
 fi
@@ -104,6 +107,10 @@ fi
 # --- Done ---
 printf "\n${GREEN}${BOLD}✨ pretty-terminal installed successfully!${RESET}\n\n"
 printf "  ${BOLD}Next steps:${RESET}\n"
+FONT_DISPLAY_NAME="JetBrainsMono Nerd Font"
+if [[ "$FONT_CHOICE" == "d2coding" ]]; then
+  FONT_DISPLAY_NAME="D2CodingLigature Nerd Font Mono"
+fi
 printf "  1. Restart your terminal (or run: exec zsh)\n"
-printf "  2. Set your terminal font to ${BOLD}JetBrainsMono Nerd Font${RESET}\n"
+printf "  2. Set your terminal font to ${BOLD}%s${RESET}\n" "$FONT_DISPLAY_NAME"
 printf "  3. Enjoy your pretty terminal!\n\n"

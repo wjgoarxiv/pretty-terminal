@@ -8,7 +8,7 @@ One command to make your terminal beautiful. Works on macOS, Windows, and Linux.
 
 ## What You Get
 
-- **JetBrainsMono Nerd Font** — Beautiful monospace font with icon support
+- **JetBrainsMono Nerd Font** — Beautiful monospace font with icon support (or D2CodingLigature Nerd Font Mono for Korean)
 - **eza** — Modern, colorful file listing with icons and tree view
 - **Oh My Zsh + Powerlevel10k** (macOS/Linux) — Clean, minimal prompt with git status
 - **Oh My Posh** (Windows) — Modern shell prompt with themes
@@ -70,17 +70,20 @@ The installer provides these options (add as flags to `install.sh` or `install.p
 | Option | Description |
 |--------|-------------|
 | `--font-only` | Install only the Nerd Font, skip other components |
+| `--font d2coding` | Use D2CodingLigature Nerd Font Mono instead of JetBrainsMono (Korean support) |
 | `--no-theme` | Skip theme and shell configuration |
 | `--uninstall` | Restore original shell configs from backups |
 
 ### macOS / Linux Example:
 ```bash
 bash ~/pretty-terminal/install.sh --font-only
+bash ~/pretty-terminal/install.sh --font d2coding    # Use Korean font
 ```
 
 ### Windows Example:
 ```powershell
 & $HOME\pretty-terminal\install.ps1 -FontOnly
+& $HOME\pretty-terminal\install.ps1 -Font d2coding   # Use Korean font
 ```
 
 ## What the Installer Does
@@ -126,7 +129,7 @@ This restores backed-up configs and removes installed packages (if you choose).
 ### Font not showing in terminal
 
 1. **Restart your terminal** after installation
-2. **Select JetBrainsMono Nerd Font** in terminal preferences
+2. **Select JetBrainsMono Nerd Font** (or D2CodingLigature Nerd Font Mono if installed with `--font d2coding`) in terminal preferences
 3. On **Windows**: Restart Windows Terminal after font installation
 
 ### Command not found: eza

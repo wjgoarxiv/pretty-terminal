@@ -4,6 +4,7 @@
 apply_configs() {
   local script_dir="$1"
   local no_theme="${2:-false}"
+  local font_choice="${3:-jetbrains}"
 
   local zshrc="$HOME/.zshrc"
 
@@ -64,6 +65,7 @@ apply_configs() {
 
 apply_terminal_config() {
   local script_dir="$1"
+  local font_choice="${2:-jetbrains}"
   local os
   os="$(detect_os)"
 
@@ -82,6 +84,10 @@ apply_terminal_config() {
     if [[ -f "$script_dir/configs/ghostty.conf" ]]; then
       backup_file "$ghostty_config_dir/config"
       cp "$script_dir/configs/ghostty.conf" "$ghostty_config_dir/config"
+      if [[ "$font_choice" == "d2coding" ]]; then
+        sed -i.sedtmp 's|JetBrainsMono Nerd Font|D2CodingLigature Nerd Font Mono|g' "$ghostty_config_dir/config"
+        rm -f "$ghostty_config_dir/config.sedtmp"
+      fi
       success "Applied Ghostty config"
       return 0
     else
@@ -95,8 +101,13 @@ apply_terminal_config() {
     if [[ -f "$iterm_plist" ]]; then
       info "iTerm2 detected"
       if [[ -f "$script_dir/configs/iterm2-profile.json" ]]; then
+        local iterm_font="JetBrainsMono Nerd Font Mono"
+        if [[ "$font_choice" == "d2coding" ]]; then
+          iterm_font="D2CodingLigature Nerd Font Mono"
+        fi
         info "iTerm2 profile available at configs/iterm2-profile.json"
         info "Import it via iTerm2 > Settings > Profiles > Other Actions > Import JSON Profiles"
+        info "After importing, set the font to: $iterm_font"
         success "iTerm2 config ready for manual import"
         return 0
       else

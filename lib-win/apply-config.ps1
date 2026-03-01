@@ -1,4 +1,10 @@
 function Apply-TerminalConfig {
+    param(
+        [string]$Font = "jetbrains"
+    )
+
+    $fontFaceName = if ($Font -eq "d2coding") { "D2CodingLigature Nerd Font Mono" } else { "JetBrainsMono Nerd Font" }
+
     Write-Info "Applying Windows Terminal configuration..."
 
     # Locate Windows Terminal settings.json
@@ -87,16 +93,16 @@ function Apply-TerminalConfig {
 
     # Set font face
     if ($null -eq $defaults.font) {
-        $defaults | Add-Member -MemberType NoteProperty -Name "font" -Value ([PSCustomObject]@{ face = "JetBrainsMono Nerd Font" }) -Force
+        $defaults | Add-Member -MemberType NoteProperty -Name "font" -Value ([PSCustomObject]@{ face = $fontFaceName }) -Force
     }
     else {
-        $defaults.font | Add-Member -MemberType NoteProperty -Name "face" -Value "JetBrainsMono Nerd Font" -Force
+        $defaults.font | Add-Member -MemberType NoteProperty -Name "face" -Value $fontFaceName -Force
     }
 
     # Set color scheme
     $defaults | Add-Member -MemberType NoteProperty -Name "colorScheme" -Value "Dracula" -Force
 
-    Write-Info "Font set to JetBrainsMono Nerd Font, color scheme set to Dracula."
+    Write-Info "Font set to $fontFaceName, color scheme set to Dracula."
 
     # Write updated settings back
     try {
