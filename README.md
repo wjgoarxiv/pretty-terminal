@@ -57,7 +57,7 @@ After installation, restart your terminal.
 
 ## Supported Terminals
 
-- **macOS**: Any terminal that supports custom fonts (iTerm2, Ghostty, Terminal.app, etc.)
+- **macOS**: iTerm2, Ghostty (automatic config), Terminal.app (font auto-applied via AppleScript). Other terminals: set font manually in preferences.
 - **Linux**: Ghostty (automatic config applied); for GNOME Terminal, Konsole, and other terminals, set JetBrainsMono Nerd Font manually in your terminal preferences
 - **Windows**: Windows Terminal (recommended)
 
@@ -131,6 +131,7 @@ This restores backed-up configs and removes installed packages (if you choose).
 1. **Restart your terminal** after installation
 2. **Select JetBrainsMono Nerd Font** (or D2CodingLigature Nerd Font Mono if installed with `--font d2coding`) in terminal preferences
 3. On **Windows**: Restart Windows Terminal after font installation
+4. On **macOS Terminal.app**: Go to Terminal > Settings > Profiles > select your profile > click "Change..." next to Font > search for "JetBrainsMono Nerd Font" (or "D2CodingLigature Nerd Font Mono" if using `--font d2coding`)
 
 ### Command not found: eza
 

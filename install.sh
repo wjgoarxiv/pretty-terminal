@@ -64,7 +64,7 @@ fi
 printf "\n${BOLD}✨ pretty-terminal installer${RESET}\n\n"
 
 # --- Step 1: Detect environment ---
-info "Step 1/6: Detecting environment..."
+info "Step 1/7: Detecting environment..."
 OS="$(detect_os)"
 PKG_MGR="$(detect_pkg_mgr)"
 success "OS: $OS | Package manager: ${PKG_MGR:-none detected}"
@@ -75,7 +75,7 @@ if [[ -z "$PKG_MGR" && "$OS" == "macos" ]]; then
 fi
 
 # --- Step 2: Install font ---
-info "Step 2/6: Font installation..."
+info "Step 2/7: Font installation..."
 install_font "$FONT_CHOICE"
 
 # Stop here if --font-only
@@ -85,32 +85,72 @@ if [[ "$FONT_ONLY" == "true" ]]; then
 fi
 
 # --- Step 3: Install eza ---
-info "Step 3/6: eza installation..."
+info "Step 3/7: eza installation..."
 install_eza
 
 # --- Step 4: Zsh + Oh My Zsh + Powerlevel10k ---
-info "Step 4/6: Zsh setup..."
+info "Step 4/7: Zsh setup..."
 install_zsh_setup
 
 # --- Step 5: Apply configs ---
-info "Step 5/6: Applying configurations..."
+info "Step 5/7: Applying configurations..."
 apply_configs "$SCRIPT_DIR" "$NO_THEME" "$FONT_CHOICE"
 
 # --- Step 6: Terminal config ---
 if [[ "$NO_TERMINAL" != "true" ]]; then
-  info "Step 6/6: Terminal configuration..."
+  info "Step 6/7: Terminal configuration..."
   apply_terminal_config "$SCRIPT_DIR" "$FONT_CHOICE"
 else
-  info "Step 6/6: Skipping terminal configuration (--no-terminal)"
+  info "Step 6/7: Skipping terminal configuration (--no-terminal)"
+fi
+
+# --- Step 7: Verify installation ---
+info "Step 7/7: Verifying installation..."
+
+VERIFY_OK=true
+
+# Check eza
+if command_exists eza; then
+  success "eza: $(eza --version 2>/dev/null | head -1)"
+else
+  warn "eza: not found in PATH"
+  VERIFY_OK=false
+fi
+
+# Check p10k config syntax
+if [[ -f "$HOME/.p10k.zsh" ]]; then
+  if zsh -n "$HOME/.p10k.zsh" 2>/dev/null; then
+    success ".p10k.zsh: syntax OK"
+  else
+    warn ".p10k.zsh: syntax error detected — run 'zsh -n ~/.p10k.zsh' for details"
+    VERIFY_OK=false
+  fi
+fi
+
+# Check font files
+FONT_DISPLAY_NAME="JetBrainsMono Nerd Font"
+FONT_CHECK_PATTERN="JetBrainsMonoNerdFont*.ttf"
+if [[ "$FONT_CHOICE" == "d2coding" ]]; then
+  FONT_DISPLAY_NAME="D2CodingLigature Nerd Font Mono"
+  FONT_CHECK_PATTERN="D2CodingLigatureNerdFontMono*.ttf"
+fi
+
+if [[ "$OS" == "macos" ]]; then
+  FONT_CHECK_DIR="$HOME/Library/Fonts"
+else
+  FONT_CHECK_DIR="$HOME/.local/share/fonts"
+fi
+
+if ls "$FONT_CHECK_DIR"/$FONT_CHECK_PATTERN >/dev/null 2>&1; then
+  success "Font: $FONT_DISPLAY_NAME installed"
+else
+  warn "Font: $FONT_DISPLAY_NAME not found in $FONT_CHECK_DIR"
+  VERIFY_OK=false
 fi
 
 # --- Done ---
 printf "\n${GREEN}${BOLD}✨ pretty-terminal installed successfully!${RESET}\n\n"
 printf "  ${BOLD}Next steps:${RESET}\n"
-FONT_DISPLAY_NAME="JetBrainsMono Nerd Font"
-if [[ "$FONT_CHOICE" == "d2coding" ]]; then
-  FONT_DISPLAY_NAME="D2CodingLigature Nerd Font Mono"
-fi
 printf "  1. Restart your terminal (or run: exec zsh)\n"
 printf "  2. Set your terminal font to ${BOLD}%s${RESET}\n" "$FONT_DISPLAY_NAME"
 printf "  3. Enjoy your pretty terminal!\n\n"

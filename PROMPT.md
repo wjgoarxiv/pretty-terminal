@@ -7,7 +7,7 @@ Use this prompt with any AI coding assistant (Claude, ChatGPT, Cursor, etc.) to 
 Copy and paste this exactly:
 
 ```
-Clone the repository https://github.com/wjgoarxiv/pretty-terminal to my home directory and run the appropriate installer for my operating system. On macOS or Linux, execute: bash ~/pretty-terminal/install.sh. On Windows, execute: & $HOME\pretty-terminal\install.ps1. After installation completes, tell me what to do next.
+Clone the repository https://github.com/wjgoarxiv/pretty-terminal to my home directory and run the appropriate installer for my operating system. On macOS or Linux, execute: bash ~/pretty-terminal/install.sh. On Windows, execute: & $HOME\pretty-terminal\install.ps1. After installation completes, verify: (1) run 'eza --version' to confirm eza works, (2) run 'zsh -n ~/.p10k.zsh' to check for config errors — if it fails, fix by changing '() {' to '{' on line 12 of ~/.p10k.zsh, (3) if on macOS Terminal.app and the font wasn't auto-applied, guide me to set the font in Terminal > Settings > Profiles > Font. Tell me what to do next.
 ```
 
 ## What the AI Will Do
@@ -21,7 +21,9 @@ The AI will:
 5. Install eza (modern file lister)
 6. Install and configure shell (Powerlevel10k for macOS/Linux, Oh My Posh for Windows)
 7. Backup your existing shell configuration
-8. Tell you to restart your terminal
+8. Verify eza installation and shell config syntax
+9. Apply font to Terminal.app if detected (macOS)
+10. Tell you what to do next
 
 ## Why Use This?
 
@@ -48,6 +50,17 @@ Clone https://github.com/wjgoarxiv/pretty-terminal to ~/pretty-terminal and run:
 1. **Restart your terminal** — New settings take effect
 2. **(Optional) Configure Powerlevel10k**: Run `p10k configure` to customize your prompt
 3. **Enjoy!** Your terminal is now beautiful
+
+## Post-Install Verification
+
+After running the installer, these checks confirm everything works:
+
+```bash
+eza --version              # Should print version info
+zsh -n ~/.p10k.zsh         # Should exit silently (no errors)
+```
+
+If `zsh -n ~/.p10k.zsh` shows a parse error, the AI should fix it by changing `() {` to `{` on line 12 of `~/.p10k.zsh`.
 
 ## Troubleshooting
 

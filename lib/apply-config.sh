@@ -68,6 +68,7 @@ apply_terminal_config() {
   local font_choice="${2:-jetbrains}"
   local os
   os="$(detect_os)"
+  local configured=false
 
   info "Detecting terminal emulator..."
 
@@ -89,7 +90,7 @@ apply_terminal_config() {
         rm -f "$ghostty_config_dir/config.sedtmp"
       fi
       success "Applied Ghostty config"
-      return 0
+      configured=true
     else
       warn "configs/ghostty.conf not found, skipping"
     fi
@@ -109,15 +110,48 @@ apply_terminal_config() {
         info "Import it via iTerm2 > Settings > Profiles > Other Actions > Import JSON Profiles"
         info "After importing, set the font to: $iterm_font"
         success "iTerm2 config ready for manual import"
-        return 0
+        configured=true
       else
         warn "configs/iterm2-profile.json not found, skipping"
       fi
     fi
   fi
 
-  warn "No supported terminal config detected (Ghostty, iTerm2)"
-  info "You can manually apply configs from the configs/ directory"
+  # --- Terminal.app (macOS only) ---
+  if [[ "$os" == "macos" ]] && [[ -d "/Applications/Utilities/Terminal.app" ]]; then
+    info "Terminal.app detected"
+    local terminal_font_name
+    if [[ "$font_choice" == "d2coding" ]]; then
+      terminal_font_name="D2CodingLigatureNFM-Regular"
+    else
+      terminal_font_name="JetBrainsMonoNF-Regular"
+    fi
+
+    local profile
+    profile="$(defaults read com.apple.Terminal 'Default Window Settings' 2>/dev/null)" || profile=""
+
+    if [[ -n "$profile" ]]; then
+      if osascript \
+        -e "tell application \"Terminal\"" \
+        -e "  set font name of settings set \"$profile\" to \"$terminal_font_name\"" \
+        -e "  set font size of settings set \"$profile\" to 13" \
+        -e "end tell" 2>/dev/null; then
+        success "Applied font to Terminal.app profile: $profile"
+        configured=true
+      else
+        warn "Could not auto-apply font to Terminal.app"
+        info "Manual setup: Terminal > Settings > Profiles > Font > select $terminal_font_name"
+      fi
+    else
+      warn "Could not detect Terminal.app default profile"
+      info "Manual setup: Terminal > Settings > Profiles > Font > select $terminal_font_name"
+    fi
+  fi
+
+  if [[ "$configured" != "true" ]]; then
+    warn "No supported terminal config detected (Ghostty, iTerm2, Terminal.app)"
+    info "You can manually apply configs from the configs/ directory"
+  fi
 }
 
 uninstall() {
