@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="cover.png" alt="pretty-terminal" width="100%">
+</p>
+
 # pretty-terminal
 
 One command to make your terminal beautiful. Works on macOS, Windows, and Linux.
