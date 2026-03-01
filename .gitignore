@@ -3,3 +3,4 @@
 node_modules/
 .omc/
 generate-cover.py
+generate-preview.py

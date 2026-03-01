@@ -13,6 +13,10 @@ One command to make your terminal beautiful. Works on macOS, Windows, and Linux.
 - **Oh My Zsh + Powerlevel10k** (macOS/Linux) — Clean, minimal prompt with git status
 - **Oh My Posh** (Windows) — Modern shell prompt with themes
 
+<p align="center">
+  <img src="preview.png" alt="Before and After" width="100%">
+</p>
+
 ## Quick Start
 
 ### Using an LLM (Recommended)
