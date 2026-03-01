@@ -15,7 +15,9 @@ One command to make your terminal beautiful. Works on macOS, Windows, and Linux.
 
 Paste this into Claude, ChatGPT, or any AI assistant:
 
-> Clone https://github.com/woojin/pretty-terminal to my home directory and run the installer for my operating system.
+```
+Clone https://github.com/wjgoarxiv/pretty-terminal to my home directory and run the installer for my operating system.
+```
 
 The AI will handle the rest automatically.
 
@@ -23,13 +25,13 @@ The AI will handle the rest automatically.
 
 **macOS / Linux:**
 ```bash
-git clone https://github.com/woojin/pretty-terminal.git ~/pretty-terminal
+git clone https://github.com/wjgoarxiv/pretty-terminal.git ~/pretty-terminal
 bash ~/pretty-terminal/install.sh
 ```
 
 **Windows (PowerShell):**
 ```powershell
-git clone https://github.com/woojin/pretty-terminal.git $HOME\pretty-terminal
+git clone https://github.com/wjgoarxiv/pretty-terminal.git $HOME\pretty-terminal
 & $HOME\pretty-terminal\install.ps1
 ```
 

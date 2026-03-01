@@ -7,7 +7,7 @@ Use this prompt with any AI coding assistant (Claude, ChatGPT, Cursor, etc.) to 
 Copy and paste this exactly:
 
 ```
-Clone the repository https://github.com/woojin/pretty-terminal to my home directory and run the appropriate installer for my operating system. On macOS or Linux, execute: bash ~/pretty-terminal/install.sh. On Windows, execute: & $HOME\pretty-terminal\install.ps1. After installation completes, tell me what to do next.
+Clone the repository https://github.com/wjgoarxiv/pretty-terminal to my home directory and run the appropriate installer for my operating system. On macOS or Linux, execute: bash ~/pretty-terminal/install.sh. On Windows, execute: & $HOME\pretty-terminal\install.ps1. After installation completes, tell me what to do next.
 ```
 
 ## What the AI Will Do
@@ -40,7 +40,7 @@ If you want to skip certain components, modify the prompt:
 
 Example:
 ```
-Clone https://github.com/woojin/pretty-terminal to ~/pretty-terminal and run: bash ~/pretty-terminal/install.sh --font-only
+Clone https://github.com/wjgoarxiv/pretty-terminal to ~/pretty-terminal and run: bash ~/pretty-terminal/install.sh --font-only
 ```
 
 ## After Installation
