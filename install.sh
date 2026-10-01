@@ -14,6 +14,9 @@ source "$SCRIPT_DIR/lib/apply-config.sh"
 # --- Error trap ---
 trap 'error "Installation failed at line $LINENO. Run with bash -x install.sh for details."' ERR
 
+# --- Stay native on Apple Silicon ---
+ensure_native_arch "${BASH_SOURCE[0]}" "$@"
+
 # --- Defaults ---
 DO_UNINSTALL=false
 FONT_ONLY=false
@@ -65,6 +68,7 @@ printf "\n${BOLD}✨ pretty-terminal installer${RESET}\n\n"
 
 # --- Step 1: Detect environment ---
 info "Step 1/7: Detecting environment..."
+use_native_homebrew || exit 1
 OS="$(detect_os)"
 PKG_MGR="$(detect_pkg_mgr)"
 success "OS: $OS | Package manager: ${PKG_MGR:-none detected}"

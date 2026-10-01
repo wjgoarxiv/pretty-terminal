@@ -182,7 +182,7 @@ This opens an interactive configuration wizard for customizing your prompt.
 
 ## System Requirements
 
-- **macOS**: 10.14+
+- **macOS**: 10.14+ (on Apple Silicon the installer always runs as arm64: it re-launches itself natively when started under Rosetta, prefers Homebrew in `/opt/homebrew` over an Intel one in `/usr/local`, and replaces an x86_64 `eza`)
 - **Linux**: Ubuntu 18.04+, Fedora 32+, Arch, or compatible distro
 - **Windows**: Windows 10 21H2+ (Windows 11 recommended)
 - **Bash/Zsh** (macOS, Linux) or **PowerShell 7+** (Windows)

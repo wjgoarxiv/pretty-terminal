@@ -182,7 +182,7 @@ p10k configure
 
 ## 시스템 요구 사항
 
-- **macOS**: 10.14 이상
+- **macOS**: 10.14 이상 (Apple Silicon에서는 설치 스크립트가 항상 arm64로 실행됩니다. Rosetta로 시작하면 네이티브로 다시 실행하고, `/usr/local`의 Intel Homebrew보다 `/opt/homebrew`를 우선 사용하며, x86_64 `eza`는 네이티브 빌드로 교체합니다)
 - **Linux**: Ubuntu 18.04+, Fedora 32+, Arch 또는 호환 배포판
 - **Windows**: Windows 10 21H2 이상 (Windows 11 권장)
 - **Bash/Zsh** (macOS, Linux) 또는 **PowerShell 7+** (Windows)

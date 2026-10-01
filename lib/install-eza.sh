@@ -5,8 +5,12 @@ install_eza() {
   info "Checking for eza..."
 
   if command_exists eza; then
-    success "eza is already installed ($(eza --version | head -1))"
-    return 0
+    if is_apple_silicon_host && is_x86_only_binary "$(command -v eza)"; then
+      warn "Existing eza ($(command -v eza)) is x86_64; installing a native arm64 build"
+    else
+      success "eza is already installed ($(eza --version | head -1))"
+      return 0
+    fi
   fi
 
   local os pkg_mgr
