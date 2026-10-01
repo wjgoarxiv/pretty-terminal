@@ -1,25 +1,58 @@
+<a id="top"></a>
+
 <p align="center">
-  <img src="cover.png" alt="pretty-terminal" width="100%">
+  <img src="cover.png" alt="pretty-terminal: one command to beautify your terminal" width="100%">
 </p>
 
-# pretty-terminal
+<h1 align="center">pretty-terminal</h1>
 
-One command to make your terminal beautiful. Works on macOS, Windows, and Linux.
+<p align="center">
+  <em>One command to make your terminal beautiful. Works on macOS, Windows, and Linux.</em>
+</p>
 
-> **English** | [한국어](README.ko.md)
+<p align="center">
+  <b>English</b> | <a href="README.ko.md">한국어</a>
+</p>
 
-## What You Get
+<p align="center">
+  <a href="#quick-start"><b>Quick Start</b></a> ·
+  <a href="#what-you-get">What You Get</a> ·
+  <a href="#apple-silicon">Apple Silicon</a> ·
+  <a href="#customization">Customization</a> ·
+  <a href="#troubleshooting">Troubleshooting</a>
+</p>
 
-- **JetBrainsMono Nerd Font** — Beautiful monospace font with icon support (or D2CodingLigature Nerd Font Mono for Korean)
-- **eza** — Modern, colorful file listing with icons and tree view
-- **Oh My Zsh + Powerlevel10k** (macOS/Linux) — Clean, minimal prompt with git status
-- **Oh My Posh** (Windows) — Modern shell prompt with themes
+<p align="center">
+  <a href="https://github.com/wjgoarxiv/pretty-terminal"><img src="https://img.shields.io/github/stars/wjgoarxiv/pretty-terminal?style=flat-square&logo=github" alt="GitHub stars"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/wjgoarxiv/pretty-terminal?style=flat-square" alt="License"></a>
+  <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue?style=flat-square" alt="Platforms: macOS, Linux, Windows">
+  <img src="https://img.shields.io/badge/Apple%20Silicon-native%20arm64-black?style=flat-square&logo=apple&logoColor=white" alt="Apple Silicon: native arm64">
+</p>
+
+---
+
+<a id="what-you-get"></a>
+
+## ✨ What You Get
+
+| Component | What it adds |
+|-----------|--------------|
+| 🔤 **JetBrainsMono Nerd Font** | Beautiful monospace font with icon support (or D2CodingLigature Nerd Font Mono for Korean) |
+| 📂 **eza** | Modern, colorful file listing with icons and tree view |
+| 🐚 **Oh My Zsh + Powerlevel10k** (macOS/Linux) | Clean, minimal prompt with git status |
+| 🪟 **Oh My Posh** (Windows) | Modern shell prompt with themes |
+| 🍎 **Native on Apple Silicon** | Always installed as arm64, never x86_64 |
 
 <p align="center">
   <img src="preview.png" alt="Before and After" width="100%">
 </p>
 
-## Quick Start
+<a id="quick-start"></a>
+
+## 🚀 Quick Start
+
+> [!IMPORTANT]
+> **On an Apple Silicon Mac, everything is installed as native arm64 — never x86_64.** See [Apple Silicon](#apple-silicon).
 
 ### Using an LLM (Recommended)
 
@@ -27,6 +60,7 @@ Paste this into Claude, ChatGPT, or any AI assistant:
 
 ```
 Clone https://github.com/wjgoarxiv/pretty-terminal to my home directory and run the installer for my operating system.
+On an Apple Silicon Mac, run it natively: uname -m must print arm64, never x86_64.
 ```
 
 The AI will handle the rest automatically.
@@ -47,7 +81,28 @@ git clone https://github.com/wjgoarxiv/pretty-terminal.git $HOME\pretty-terminal
 
 After installation, restart your terminal.
 
-## What Gets Installed
+<a id="apple-silicon"></a>
+
+## 🍎 Apple Silicon
+
+On an Apple Silicon Mac the installer never sets up x86_64 binaries. It detects Apple Silicon from the hardware, not from the shell's architecture, so a Rosetta terminal does not lead to an Intel install.
+
+| Situation | What `install.sh` does |
+|-----------|------------------------|
+| Started from a Rosetta (x86_64) terminal | Re-launches itself with `arch -arm64` before installing anything |
+| Native Homebrew in `/opt/homebrew` exists | Puts it first in `PATH` for the installer run, even if an Intel Homebrew is also installed |
+| Only Intel Homebrew in `/usr/local` exists | Stops and asks you to install native Homebrew |
+| An x86_64 `eza` is already installed | Replaces it with a native build instead of skipping it |
+| Linux, Intel Macs, Windows | Nothing changes |
+
+Check your setup:
+
+```bash
+uname -m           # must print arm64
+brew --prefix      # should print /opt/homebrew
+```
+
+## 📦 What Gets Installed
 
 | Component | macOS | Linux | Windows |
 |-----------|:-----:|:-----:|:-------:|
@@ -57,7 +112,7 @@ After installation, restart your terminal.
 | Powerlevel10k | ✓ | ✓ | — |
 | Oh My Posh | — | — | ✓ |
 
-## Supported Terminals
+## 🖥️ Supported Terminals
 
 - **macOS**: iTerm2, Ghostty (automatic config), Terminal.app (font auto-applied via AppleScript). Other terminals: set font manually in preferences.
 - **Linux**: Ghostty (automatic config applied); for GNOME Terminal, Konsole, and other terminals, set JetBrainsMono Nerd Font manually in your terminal preferences
@@ -65,7 +120,7 @@ After installation, restart your terminal.
 
 The installer detects your OS and installs components compatible with your system.
 
-## Installation Options
+## 🎛️ Installation Options
 
 The installer provides these options (add as flags to `install.sh` or `install.ps1`):
 
@@ -88,7 +143,7 @@ bash ~/pretty-terminal/install.sh --font d2coding    # Use Korean font
 & $HOME\pretty-terminal\install.ps1 -Font d2coding   # Use Korean font
 ```
 
-## What the Installer Does
+## ⚙️ What the Installer Does
 
 ### On macOS / Linux
 
@@ -110,7 +165,7 @@ bash ~/pretty-terminal/install.sh --font d2coding    # Use Korean font
 3. **Installs eza via Scoop**
 4. **Registers font in Windows registry** for system-wide availability
 
-## Uninstall
+## 🧹 Uninstall
 
 To restore your original terminal configuration:
 
@@ -126,7 +181,15 @@ bash ~/pretty-terminal/install.sh --uninstall
 
 This restores backed-up configs and removes installed packages (if you choose).
 
-## Troubleshooting
+<a id="troubleshooting"></a>
+
+## 🩺 Troubleshooting
+
+### x86_64 tools on Apple Silicon
+
+1. Check the terminal: `uname -m` must print `arm64`
+2. Check the tool: `file "$(command -v eza)"` must mention `arm64`
+3. If either fails, open a native (non-Rosetta) terminal and rerun the installer; it replaces an x86_64 `eza` with a native build
 
 ### Font not showing in terminal
 
@@ -155,7 +218,9 @@ chmod +x ~/pretty-terminal/install.sh
 bash ~/pretty-terminal/install.sh
 ```
 
-## Customization
+<a id="customization"></a>
+
+## 🎨 Customization
 
 ### eza Aliases
 
@@ -180,14 +245,14 @@ p10k configure
 
 This opens an interactive configuration wizard for customizing your prompt.
 
-## System Requirements
+## 📋 System Requirements
 
-- **macOS**: 10.14+ (on Apple Silicon the installer always runs as arm64: it re-launches itself natively when started under Rosetta, prefers Homebrew in `/opt/homebrew` over an Intel one in `/usr/local`, and replaces an x86_64 `eza`)
+- **macOS**: 10.14+ (Apple Silicon: native arm64 only, see [Apple Silicon](#apple-silicon))
 - **Linux**: Ubuntu 18.04+, Fedora 32+, Arch, or compatible distro
 - **Windows**: Windows 10 21H2+ (Windows 11 recommended)
 - **Bash/Zsh** (macOS, Linux) or **PowerShell 7+** (Windows)
 
-## Contributing
+## 🤝 Contributing
 
 Found an issue? Have a suggestion?
 
@@ -195,9 +260,19 @@ Found an issue? Have a suggestion?
 2. Open a new issue with details about your OS and terminal
 3. Include the output of `bash ~/pretty-terminal/install.sh` or `& $HOME\pretty-terminal\install.ps1`
 
-## License
+## 📄 License
 
 MIT License — see LICENSE file for details.
+
+---
+
+<p align="center">
+  <a href="#top">Back to top</a> ·
+  <a href="#quick-start">Quick Start</a> ·
+  <a href="#troubleshooting">Troubleshooting</a> ·
+  <a href="https://github.com/wjgoarxiv/pretty-terminal/issues">Issues</a> ·
+  <a href="./LICENSE">License</a>
+</p>
 
 ---
 

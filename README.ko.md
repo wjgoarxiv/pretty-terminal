@@ -1,25 +1,58 @@
+<a id="top"></a>
+
 <p align="center">
-  <img src="cover.png" alt="pretty-terminal" width="100%">
+  <img src="cover.png" alt="pretty-terminal: 터미널을 아름답게 만드는 한 줄 명령어" width="100%">
 </p>
 
-# pretty-terminal
+<h1 align="center">pretty-terminal</h1>
 
-터미널을 아름답게 만드는 한 줄 명령어. macOS, Windows, Linux 모두 지원합니다.
+<p align="center">
+  <em>터미널을 아름답게 만드는 한 줄 명령어. macOS, Windows, Linux 모두 지원합니다.</em>
+</p>
 
-> [English](README.md) | **한국어**
+<p align="center">
+  <a href="README.md">English</a> | <b>한국어</b>
+</p>
 
-## 주요 기능
+<p align="center">
+  <a href="#quick-start"><b>빠른 시작</b></a> ·
+  <a href="#what-you-get">주요 기능</a> ·
+  <a href="#apple-silicon">Apple Silicon</a> ·
+  <a href="#customization">커스터마이징</a> ·
+  <a href="#troubleshooting">문제 해결</a>
+</p>
 
-- **JetBrainsMono Nerd Font** — 아이콘을 지원하는 아름다운 고정폭 폰트 (한국어 사용자를 위한 D2CodingLigature Nerd Font Mono 선택 가능)
-- **eza** — 아이콘과 트리 뷰를 지원하는 모던 파일 목록 도구
-- **Oh My Zsh + Powerlevel10k** (macOS/Linux) — Git 상태를 표시하는 깔끔한 프롬프트
-- **Oh My Posh** (Windows) — 테마를 지원하는 모던 셸 프롬프트
+<p align="center">
+  <a href="https://github.com/wjgoarxiv/pretty-terminal"><img src="https://img.shields.io/github/stars/wjgoarxiv/pretty-terminal?style=flat-square&logo=github" alt="GitHub stars"></a>
+  <a href="./LICENSE"><img src="https://img.shields.io/github/license/wjgoarxiv/pretty-terminal?style=flat-square" alt="License"></a>
+  <img src="https://img.shields.io/badge/platform-macOS%20%7C%20Linux%20%7C%20Windows-blue?style=flat-square" alt="지원 플랫폼: macOS, Linux, Windows">
+  <img src="https://img.shields.io/badge/Apple%20Silicon-native%20arm64-black?style=flat-square&logo=apple&logoColor=white" alt="Apple Silicon: 네이티브 arm64">
+</p>
+
+---
+
+<a id="what-you-get"></a><a id="주요-기능"></a>
+
+## ✨ 주요 기능
+
+| 구성 요소 | 설명 |
+|-----------|------|
+| 🔤 **JetBrainsMono Nerd Font** | 아이콘을 지원하는 아름다운 고정폭 폰트 (한국어 사용자를 위한 D2CodingLigature Nerd Font Mono 선택 가능) |
+| 📂 **eza** | 아이콘과 트리 뷰를 지원하는 모던 파일 목록 도구 |
+| 🐚 **Oh My Zsh + Powerlevel10k** (macOS/Linux) | Git 상태를 표시하는 깔끔한 프롬프트 |
+| 🪟 **Oh My Posh** (Windows) | 테마를 지원하는 모던 셸 프롬프트 |
+| 🍎 **Apple Silicon 네이티브** | 항상 arm64로 설치되며, x86_64로는 설치되지 않습니다 |
 
 <p align="center">
   <img src="preview.png" alt="설치 전후 비교" width="100%">
 </p>
 
-## 빠른 시작
+<a id="quick-start"></a><a id="빠른-시작"></a>
+
+## 🚀 빠른 시작
+
+> [!IMPORTANT]
+> **Apple Silicon Mac에서는 모든 구성 요소가 네이티브 arm64로 설치되며, x86_64로는 설치되지 않습니다.** 자세한 내용은 [Apple Silicon](#apple-silicon)을 참조하세요.
 
 ### LLM 사용 (권장)
 
@@ -27,6 +60,7 @@ Claude, ChatGPT 또는 다른 AI 어시스턴트에 아래 내용을 붙여넣�
 
 ```
 https://github.com/wjgoarxiv/pretty-terminal 을 홈 디렉토리에 클론하고 내 운영체제에 맞는 설치 스크립트를 실행해줘.
+Apple Silicon Mac이면 네이티브로 실행해줘: uname -m이 x86_64가 아니라 arm64로 출력되어야 해.
 ```
 
 AI가 나머지를 자동으로 처리합니다.
@@ -47,7 +81,28 @@ git clone https://github.com/wjgoarxiv/pretty-terminal.git $HOME\pretty-terminal
 
 설치 후 터미널을 재시작하세요.
 
-## 설치 항목
+<a id="apple-silicon"></a>
+
+## 🍎 Apple Silicon
+
+Apple Silicon Mac에서는 설치 스크립트가 x86_64 바이너리를 설치하지 않습니다. 셸의 아키텍처가 아니라 하드웨어로 Apple Silicon 여부를 판단하므로, Rosetta 터미널에서 실행해도 Intel 설치로 이어지지 않습니다.
+
+| 상황 | `install.sh`의 동작 |
+|------|---------------------|
+| Rosetta(x86_64) 터미널에서 시작한 경우 | 설치 전에 `arch -arm64`로 스스로 다시 실행합니다 |
+| `/opt/homebrew`에 네이티브 Homebrew가 있는 경우 | Intel Homebrew가 함께 있어도 설치 실행 동안 `PATH` 맨 앞에 둡니다 |
+| `/usr/local`에 Intel Homebrew만 있는 경우 | 중단하고 네이티브 Homebrew 설치를 안내합니다 |
+| x86_64 `eza`가 이미 설치된 경우 | 건너뛰지 않고 네이티브 빌드로 교체합니다 |
+| Linux, Intel Mac, Windows | 달라지는 것이 없습니다 |
+
+설정 확인:
+
+```bash
+uname -m           # arm64 로 출력되어야 합니다
+brew --prefix      # /opt/homebrew 로 출력되어야 합니다
+```
+
+## 📦 설치 항목
 
 | 구성 요소 | macOS | Linux | Windows |
 |-----------|:-----:|:-----:|:-------:|
@@ -57,7 +112,7 @@ git clone https://github.com/wjgoarxiv/pretty-terminal.git $HOME\pretty-terminal
 | Powerlevel10k | ✓ | ✓ | — |
 | Oh My Posh | — | — | ✓ |
 
-## 지원 터미널
+## 🖥️ 지원 터미널
 
 - **macOS**: iTerm2, Ghostty (자동 설정), Terminal.app (AppleScript로 폰트 자동 적용). 기타 터미널은 환경설정에서 수동으로 폰트를 지정하세요.
 - **Linux**: Ghostty (자동 설정 적용). GNOME Terminal, Konsole 등은 터미널 환경설정에서 JetBrainsMono Nerd Font를 수동으로 설정하세요.
@@ -65,7 +120,7 @@ git clone https://github.com/wjgoarxiv/pretty-terminal.git $HOME\pretty-terminal
 
 설치 스크립트가 OS를 자동 감지하여 호환되는 구성 요소를 설치합니다.
 
-## 설치 옵션
+## 🎛️ 설치 옵션
 
 설치 스크립트에 플래그를 추가하여 사용할 수 있습니다:
 
@@ -88,7 +143,7 @@ bash ~/pretty-terminal/install.sh --font d2coding    # 한국어 폰트 사용
 & $HOME\pretty-terminal\install.ps1 -Font d2coding   # 한국어 폰트 사용
 ```
 
-## 설치 과정 상세
+## ⚙️ 설치 과정 상세
 
 ### macOS / Linux
 
@@ -110,7 +165,7 @@ bash ~/pretty-terminal/install.sh --font d2coding    # 한국어 폰트 사용
 3. **Scoop을 통해 eza 설치**
 4. **Windows 레지스트리에 폰트 등록** — 시스템 전체에서 사용 가능
 
-## 제거
+## 🧹 제거
 
 원래 터미널 설정으로 복원하려면:
 
@@ -126,7 +181,15 @@ bash ~/pretty-terminal/install.sh --uninstall
 
 백업된 설정 파일을 복원하고, 설치된 패키지를 제거합니다 (선택 시).
 
-## 문제 해결
+<a id="troubleshooting"></a><a id="문제-해결"></a>
+
+## 🩺 문제 해결
+
+### Apple Silicon에서 x86_64 도구가 설치된 경우
+
+1. 터미널 확인: `uname -m`이 `arm64`로 출력되어야 합니다
+2. 도구 확인: `file "$(command -v eza)"`에 `arm64`가 포함되어야 합니다
+3. 하나라도 아니라면 네이티브(Rosetta가 아닌) 터미널을 열고 설치 스크립트를 다시 실행하세요. x86_64 `eza`는 네이티브 빌드로 교체됩니다
 
 ### 터미널에 폰트가 표시되지 않는 경우
 
@@ -155,7 +218,9 @@ chmod +x ~/pretty-terminal/install.sh
 bash ~/pretty-terminal/install.sh
 ```
 
-## 커스터마이징
+<a id="customization"></a><a id="커스터마이징"></a>
+
+## 🎨 커스터마이징
 
 ### eza 별칭
 
@@ -180,14 +245,14 @@ p10k configure
 
 프롬프트를 커스터마이징하는 대화형 설정 마법사가 열립니다.
 
-## 시스템 요구 사항
+## 📋 시스템 요구 사항
 
-- **macOS**: 10.14 이상 (Apple Silicon에서는 설치 스크립트가 항상 arm64로 실행됩니다. Rosetta로 시작하면 네이티브로 다시 실행하고, `/usr/local`의 Intel Homebrew보다 `/opt/homebrew`를 우선 사용하며, x86_64 `eza`는 네이티브 빌드로 교체합니다)
+- **macOS**: 10.14 이상 (Apple Silicon: 네이티브 arm64 전용, [Apple Silicon](#apple-silicon) 참조)
 - **Linux**: Ubuntu 18.04+, Fedora 32+, Arch 또는 호환 배포판
 - **Windows**: Windows 10 21H2 이상 (Windows 11 권장)
 - **Bash/Zsh** (macOS, Linux) 또는 **PowerShell 7+** (Windows)
 
-## 기여하기
+## 🤝 기여하기
 
 문제를 발견하셨거나 제안 사항이 있으신가요?
 
@@ -195,9 +260,19 @@ p10k configure
 2. OS와 터미널 정보를 포함하여 새 이슈를 등록하세요
 3. `bash ~/pretty-terminal/install.sh` 또는 `& $HOME\pretty-terminal\install.ps1`의 출력을 첨부하세요
 
-## 라이선스
+## 📄 라이선스
 
 MIT 라이선스 — 자세한 내용은 LICENSE 파일을 참조하세요.
+
+---
+
+<p align="center">
+  <a href="#top">맨 위로</a> ·
+  <a href="#quick-start">빠른 시작</a> ·
+  <a href="#troubleshooting">문제 해결</a> ·
+  <a href="https://github.com/wjgoarxiv/pretty-terminal/issues">이슈</a> ·
+  <a href="./LICENSE">라이선스</a>
+</p>
 
 ---
 
